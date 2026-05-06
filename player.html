@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Login</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+        body { background: #0f0f0f; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        .box { background: #1f1f1f; padding: 30px; border-radius: 15px; border: 2px solid #d4af37; width: 90%; max-width: 350px; text-align: center; }
+        input { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #444; background: #2b2b2b; color: white; outline: none; }
+        .btn { width: 100%; padding: 15px; background: #d4af37; color: black; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        #gameUI { display: none; }
+        .balance-box { background: #27ae60; padding: 20px; border-radius: 10px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <!-- Login Form -->
+    <div id="loginUI" class="box">
+        <h2 style="color:#d4af37; margin-bottom:20px;">MEMBER LOGIN</h2>
+        <input type="text" id="u" placeholder="Username">
+        <input type="password" id="p" placeholder="Password">
+        <button class="btn" onclick="login()">LOGIN</button>
+    </div>
+
+    <!-- Game UI -->
+    <div id="gameUI" class="box">
+        <h2 id="welcome">Welcome</h2>
+        <div class="balance-box">
+            <p>လက်ကျန်ယူနစ်</p>
+            <h1 id="bal">0</h1>
+        </div>
+        <button class="btn" style="margin-top:20px; background:#444; color:white;" onclick="location.reload()">LOGOUT</button>
+    </div>
+
+    <script>
+        function login() {
+            const accounts = JSON.parse(localStorage.getItem('MASTER_DB')) || [];
+            const user = document.getElementById('u').value;
+            const pass = document.getElementById('p').value;
+
+            const found = accounts.find(a => a.name === user && a.pass === pass);
+
+            if (found) {
+                document.getElementById('loginUI').style.display = 'none';
+                document.getElementById('gameUI').style.display = 'block';
+                document.getElementById('welcome').innerText = "Hello, " + found.name;
+                document.getElementById('bal').innerText = found.balance.toLocaleString() + " MMK";
+            } else {
+                alert("အကောင့်မရှိပါ သို့မဟုတ် Password မှားနေသည်");
+            }
+        }
+    </script>
+</body>
+</html>
