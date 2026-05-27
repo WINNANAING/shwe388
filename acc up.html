@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Club388 Gaming</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #0f0f1a;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: white;
+        }
+
+        /* Login & Dashboard Containers */
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            width: 90%;
+            max-width: 600px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+            background: #252535;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #f1c40f;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        button:hover { background: #d4ac0d; }
+
+        /* Grid System */
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .game-card {
+            background: #1a1a2e;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #f1c40f;
+            transition: 0.3s;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .game-card:hover { 
+            background: #f1c40f; 
+            color: #000; 
+            transform: translateY(-5px);
+        }
+
+        .header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 1px solid #333; 
+            padding-bottom: 15px; 
+            margin-bottom: 20px;
+        }
+
+        /* Section control */
+        .page-section { display: none; }
+        .active { display: block; }
+
+        .back-btn {
+            background: #444;
+            color: white;
+            width: auto;
+            padding: 5px 15px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="login-page" class="container page-section active">
+        <h2 style="color:#f1c40f;">CLUB 388</h2>
+        <p>အကောင့်ဝင်ပါ</p>
+        <input type="text" id="user" placeholder="Username">
+        <input type="password" id="pass" placeholder="Password">
+        <button onclick="login()">LOGIN</button>
+    </div>
+
+    <div id="game-page" class="container page-section">
+        <div class="header">
+            <h3>Hi, <span id="display-name" style="color:#f1c40f;"></span></h3>
+            <button class="back-btn" onclick="location.reload()">ထွက်ရန်</button>
+        </div>
+        <h4>အမျိုးအစား ရွေးချယ်ပါ</h4>
+        <div class="game-grid">
+            <div class="game-card" onclick="showSection('slot-list')">🎰 Slot Games</div>
+            <div class="game-card">🃏 Live Casino</div>
+            <div class="game-card">⚽ Sports</div>
+            <div class="game-card">🐟 Fish Hunter</div>
+        </div>
+    </div>
+
+    <div id="slot-list" class="container page-section">
+        <div class="header">
+            <button class="back-btn" onclick="showSection('game-page')">← နောက်သို့</button>
+            <h3 style="color:#f1c40f; margin:0;">Slot Games</h3>
+            <div style="width:70px;"></div>
+        </div>
+        <p>ကစားလိုသည့် ဂိမ်းကုမ္ပဏီကို ရွေးပါ</p>
+        <div class="game-grid">
+            
+            <div class="game-card" onclick="openGame('https://www.google.com')">
+                🎰 Pragmatic Play
+            </div>
+
+            <div class="game-card" onclick="openGame('joker-game.html')">
+                🤡 Joker Gaming
+            </div>
+
+            <div class="game-card" onclick="openGame('https://www.pgsoft.com')">
+                🎮 PG Soft
+            </div>
+
+            <div class="game-card" onclick="openGame('jili-game.html')">
+                🔥 Jili Games
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Login Function
+        function login() {
+            var user = document.getElementById("user").value;
+            var pass = document.getElementById("pass").value;
+
+            if (user !== "" && pass !== "") {
+                document.getElementById("display-name").innerText = user;
+                showSection('game-page');
+            } else {
+                alert("Username နှင့် Password ကို ရိုက်ထည့်ပါ!");
+            }
+        }
+
+        // Section များ ပြောင်းလဲပေးမည့် Function
+        function showSection(sectionId) {
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        // ဂိမ်းလင့်ခ်ကို စာမျက်နှာအသစ်နဲ့ ဖွင့်ပေးမည့် Function အသစ်
+        function openGame(url) {
+            // window.open(url, '_blank') ဆိုရင် Tab အသစ်နဲ့ ပွင့်မှာပါ
+            // လက်ရှိ စာမျက်နှာမှာတင် တန်းပွင့်စေချင်ရင် window.location.href = url; လို့ ပြောင်းနိုင်ပါတယ်
+            window.open(url, '_blank'); 
+        }
+    </script>
+
+</body>
+</html>
